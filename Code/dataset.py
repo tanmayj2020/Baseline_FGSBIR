@@ -8,7 +8,7 @@ from PIL import Image
 import random
 import torchvision.transforms.functional as F
 from rasterize import rasterize_Sketch
-
+from utils import mydrawPNG
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -44,6 +44,7 @@ class FGSBIR_Dataset(data.Dataset):
             negative_path = os.path.join(self.root_dir, 'photo', negative_sample + '.png')
 
             vector_x = self.Coordinate[sketch_path]
+            vector_x = mydrawPNG(vector_x , 300)
             sketch_img = rasterize_Sketch(vector_x)
             sketch_img = Image.fromarray(sketch_img).convert('RGB')
 
